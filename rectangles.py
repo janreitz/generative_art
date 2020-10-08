@@ -1,6 +1,7 @@
 import cairo
 import math
 import random
+import colors
 
 def generate_rect_grid(width, height, num_rows, num_cols):
     rects = []
@@ -51,15 +52,9 @@ if __name__ == "__main__":
     # Line brush setup
     ctx.set_line_width(4)
 
-    mondrian = [
-        (255/255,240/255,1/255),
-        (255/255,1/255,1/255),
-        (1/255,1/255,253/255),
-    ]
+    palette = colors.rgb255to1(colors.mondrian_rgb_255)
 
-    greys = [(i/10, i/10, i/10) for i in range(10)]
-
-    rects = generate_rect_grid(WIDTH/10, HEIGHT/10, 10, 10)
+    rects = generate_rect_grid(WIDTH/8, HEIGHT/8, 8, 8)
     rects = random_recursive_splits(3, rects)
 
     for x, y, width, height in rects:
@@ -67,7 +62,7 @@ if __name__ == "__main__":
         ctx.set_source_rgb(0, 0, 0)
         ctx.stroke()
         ctx.rectangle(x, y, width, height)
-        color = random.choice(mondrian)
+        color = random.choice(palette)
         ctx.set_source_rgb(*color)
         ctx.fill()
     
